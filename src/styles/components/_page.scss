@@ -1,0 +1,19 @@
+.page {
+    align-items: center;
+    color: blue;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    width: 100vw;
+}
+
+.page__content {
+    border: 1px solid red;
+    height: 50vh;
+    width: 50vw;
+}
+
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+  }

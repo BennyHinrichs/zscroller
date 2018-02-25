@@ -1,0 +1,46 @@
+* {
+    box-sizing: border-box;
+    &:focus {
+        outline: none;
+    }
+}
+
+html {
+    font-size: 62.5%;
+}
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+body {
+    color: $dark-gray;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: $m-size;
+    line-height: 1.6;
+    margin: 0;
+    scroll-behavior: smooth;
+}
+
+a {
+    text-decoration: none;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: default;
+}
+
+h1 {
+    font-size: $l-size;
+    @media (min-width: $desktop-breakpoint) {
+        font-size: $xl-size;
+    }
+}
+
+.is-active {
+    font-weight: bold;
+}
