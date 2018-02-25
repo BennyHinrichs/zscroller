@@ -24,7 +24,6 @@ const setDocHeight = () => {docHeight = Math.max( document.body.scrollHeight, do
 setDocHeight();
 // timeout for throttle
 const transitionTime = 500;
-let lastRun = 0;
 // scroll location
 let resizeScroll = null;
 let scrollTop = document.documentElement.scrollTop;
@@ -80,3 +79,10 @@ const scrollSnap = () => {
 window.addEventListener('scroll', scrollSnap);
 // the scroll is broken for viewports smaller than ~230px
 window.addEventListener('resize', handleResize);
+
+const easeInOutQuad = (t, b, c, d) => {
+    t /= d / 2;
+    if (t < 1) return c / 2 * t * t + b;
+    t--;
+    return -c / 2 * (t * (t - 2) - 1) + b;
+};
