@@ -19,27 +19,32 @@ const container = document.getElementsByClassName('container')[0];
 const pageCount = container.childElementCount;
 const pages = container.children;
 // document height
-let docHeight = 0, pageHeight = 0;
+let docHeight, pageHeight;
 const setHeight = () => {
-    docHeight = Math.max( document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, 
-        document.documentElement.scrollHeight, document.documentElement.offsetHeight );
-    pageHeight = docHeight / pageCount
+    docHeight = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, 
+        document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+    pageHeight = docHeight / pageCount;
 };
 setHeight();
 // scroll location
-let resizeScroll = null;
-let hasScrolled = false;
-let scrollTop = document.documentElement.scrollTop;
-let currentPage = 0, scrollStart = window.pageYOffset;
+let resizeScroll = null, hasScrolled = false, scrollTop;
+const setScrollTop = () => {scrollTop = document.documentElement.scrollTop};
+setScrollTop();
+let currentPage, scrollStart; // scrollStart is used in the scrollLoop function
 const setCurrentPage = () => {currentPage = Math.round(scrollTop / docHeight * pageCount)};
 setCurrentPage();
 // top of page
-let pageTop = 0, scrollDirection = 0;
+let pageTop, scrollDirection = 0;
 const setPageTop = () => {pageTop = pages[currentPage + scrollDirection].offsetTop};
 setPageTop();
 // time variables
-const transitionTime = 600;
-let timeStart = 0, timeElapsed = 0;
+let transitionTime;
+const setTransitionTime = () => {
+    // damping function based off viewport height
+    transitionTime = pageHeight * (1 + 2 * Math.exp(-0.003 * pageHeight));
+}
+setTransitionTime();
+let timeStart, timeElapsed;
 
 // set up page with different divs
 for (let i=1;i<=pageCount;i++) {
@@ -54,15 +59,20 @@ const handleResize = (e) => {
     scrollDirection = 0;
     setPageTop();
     window.scrollTo(0, pageTop);
+    setScrollTop(); // prevents decoupling from scrollSnap on risize of last page
+    // adjust transition time based off height of viewport
+    setHeight();
+    setTransitionTime();
 }
 
 const scrollSnap = () => {
+    // scroll is broken if you scroll quickly
+    // scroll is broken if you switch quickly between up and down
+    // scroll is broken for viewports smaller than ~230px
     if (resizeScroll === 'resize') { resizeScroll = null; return; }
     if (hasScrolled) return;
     // stop scrolling inputs (hopefully)
     body.classList.add('stop-scrolling');
-    // if (window.pageYOffset !== pageTop) {window.scrollTo(0, pageTop); return;}
-
     // determine up, down, or neither
     if (scrollTop > document.documentElement.scrollTop && currentPage !== 0) {
         scrollDirection = -1;
@@ -86,15 +96,15 @@ const scrollSnap = () => {
     setTimeout(() => body.classList.remove('stop-scrolling'), transitionTime);
     
 }
+// TODO: add a scroll tolerance for mobile
 window.addEventListener('scroll', scrollSnap);
-// the scroll is broken for viewports smaller than ~230px
 window.addEventListener('resize', handleResize);
 
 // animation utils, adapted from https://github.com/sitepoint-editors/smooth-scrolling/blob/gh-pages/jump.js
 const scrollLoop = (time) => {
     hasScrolled = true;
     timeElapsed = time - timeStart;
-    window.scrollTo(0, easeInOutQuad(timeElapsed, scrollStart, pageHeight, transitionTime));
+    window.scrollTo(0, easeInOutCos(timeElapsed, scrollStart, pageHeight, transitionTime));
     if (pageTop - 1 < window.pageYOffset && scrollDirection === 1) {
         scrollStop();
     } else if (pageTop + 1 > window.pageYOffset && scrollDirection === -1) {
@@ -106,8 +116,8 @@ const scrollLoop = (time) => {
     }
 };
 
-const easeInOutQuad = (t, b, c, d) => {
-    const upOrDown = scrollDirection === 1 ? -1 : 1
+const easeInOutCos = (t, b, c, d) => {
+    const upOrDown = scrollDirection * -1;
     return upOrDown * c / 2 * (Math.cos(Math.PI * t / d) - 1) + b;
 };
 
