@@ -1,16 +1,89 @@
 .page {
     align-items: center;
-    color: blue;
     display: flex;
     height: 100vh;
     justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+    perspective: 1px;
     width: 100vw;
 }
 
-.page__content {
-    border: 1px solid red;
-    height: 50vh;
-    width: 50vw;
+.zframe {
+    background-size: 100%;
+    height: 100vh;
+    position: absolute;
+    width: 100vw;
+}
+
+.overlay-text{
+    background: fade-out(black, .2);
+    background-position: center;
+    background-size: 100%;
+    clip-path: inset(0 50% 0 50%);
+    color: fade-out(white, .6);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    mix-blend-mode: hard-light;
+    padding: 0 19vw;
+    text-align: left;
+    transform: translateZ(0) scale(1);
+    width: 100%;
+    transition: padding $long-ease ease-out,
+        color $ease-time ease-out,
+        clip-path $ease-time ease-out,
+        transform $ease-time ease-out;
+    h1 {
+        font-size: 10vw;
+        line-height: 1;
+        margin: 0;
+        text-transform: uppercase;
+    }
+    p {
+        font-size: $l-size;
+        margin-top: 0;
+        padding-left: 8vw;
+        transition: padding-left $long-ease ease-out;
+    }
+}
+
+.zframe--content {
+    align-items: center;
+    background: url('/images/PinkHenrik.jpg');
+    background-position: center;
+    background-size: 100%;
+    clip-path: inset(10% 10% 10% 10%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    transform: translateZ(-.1px);
+    transition: all $ease-time cubic-bezier(.38,.13,.9,.9);
+    &:active {
+        transform: translateZ(0);
+        clip-path: inset(0 0 0 0);
+        .overlay-text {
+            transform: translateZ(1px) scale(4);
+        }
+    }
+    &:hover {
+        .overlay-text {
+            clip-path: inset(0 0 0 0);
+            color: fade-out(#ffffff, .4);
+            padding-left: 20vw;
+            p {
+                padding-left: 6vw;
+            }
+        }
+    }
+}
+
+.zframe--frame {
+    background: url('/images/background1.png');
+    background-size: 100%;
+    transform: translateZ(0);
 }
 
 .stop-scrolling {

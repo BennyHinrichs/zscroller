@@ -4,11 +4,28 @@ import './styles/styles.scss';
 
 const jsx = (
     <div className="container">
-        <div className="page" id="top"><div className="page page__content"></div></div>
-        <div className="page"><div className="page page__content"></div></div>
-        <div className="page"><div className="page page__content"></div></div>
-        <div className="page"><div className="page page__content"></div></div>
-        <div className="page"><div className="page page__content"><a href="#top"></a></div></div>
+        <div className="page" id="top">
+            <div className="zframe zframe--frame"></div>
+            <div className="zframe zframe--content">
+                {/*<div>Stuff</div>*/}
+                <div className="overlay-text">
+                    <h1>A New Plague</h1>
+                    <p>A grindark novelette</p>
+                </div>
+            </div>
+        </div>
+        <div className="page">
+            <div className="zframe zframe--content"></div>
+        </div>
+        <div className="page">
+            <div className="zframe zframe--content"></div>
+        </div>
+        <div className="page">
+            <div className="zframe zframe--content"></div>
+        </div>
+        <div className="page">
+            <div className="zframe zframe--content"></div>
+        </div>
     </div>
 );
 ReactDOM.render(jsx, document.getElementById('app'));
@@ -51,7 +68,7 @@ for (let i=1;i<=pageCount;i++) {
     const weight = Math.round(255 * i / pageCount);
     const page = document.querySelector(`.page:nth-child(${i})`);
     page.style.background = `rgb(${weight},${weight},${weight})`;
-    page.children[0].innerHTML += `<a href="#top">${i}</a>`;
+    // page.children[0].innerHTML += `<a href="#top">${i}</a>`;
 }
 
 const handleResize = (e) => {
@@ -104,7 +121,8 @@ window.addEventListener('resize', handleResize);
 const scrollLoop = (time) => {
     hasScrolled = true;
     timeElapsed = time - timeStart;
-    window.scrollTo(0, easeInOutCos(timeElapsed, scrollStart, pageHeight, transitionTime));
+    let step = easeInOutCos(timeElapsed, scrollStart, pageHeight, transitionTime);
+    window.scrollTo(0, step);
     if (pageTop - 1 < window.pageYOffset && scrollDirection === 1) {
         scrollStop();
     } else if (pageTop + 1 > window.pageYOffset && scrollDirection === -1) {
