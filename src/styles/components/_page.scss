@@ -51,7 +51,6 @@
 
 .zframe--content {
     align-items: center;
-    background: url('/images/PinkHenrik.jpg');
     background-position: center;
     background-size: 100%;
     clip-path: inset(10% 10% 10% 10%);
@@ -77,6 +76,14 @@
                 padding-left: 6vw;
             }
         }
+    }
+}
+
+.active {
+    transform: translateZ(0);
+    clip-path: inset(0 0 0 0);
+    .overlay-text {
+        transform: translateZ(1px) scale(4);
     }
 }
 
