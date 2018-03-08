@@ -1,12 +1,12 @@
 * - [x] Scroll animations
 * Content
-    * Frame + parallax
+    * Parallax
     * - [x] zPage hover
     * Background fuzz image
-* zScroll on page select
+* - [x] zScroll on page select
     * - [x] Animate
-    * Deactivate scrollSnap and replace with zScroll
-    * zScroll zoom out
+    * - [x] Deactivate scrollSnap and replace with zScroll
+    * - [x] zScroll zoom out
 * Content tiles (zPages) for zPage
     * Dynamic layout/ordering (like die dots)
     * Should be able to reuse frame, parallax, and hover

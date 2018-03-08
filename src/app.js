@@ -122,8 +122,6 @@ export default class ZScroller extends React.Component {
                         <ZFrame
                             key={datum.imgSrc}
                             id={index}
-                            pageTop={pageTop}
-                            setPageTop={this.setPageTop}
                             hasScrolledToFalse={this.hasScrolledToFalse}
                             hasScrolledToTrue={this.hasScrolledToTrue}
                             body={body}

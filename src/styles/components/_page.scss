@@ -22,21 +22,24 @@
     background-size: 100%;
     clip-path: inset(0 50% 0 50%);
     color: fade-out(white, .6);
+    cursor: default;
     display: flex;
     flex-direction: column;
     height: 100%;
     justify-content: center;
     mix-blend-mode: hard-light;
+    position: absolute;
     padding: 0 19vw;
     text-align: left;
     transform: translateZ(0) scale(1);
     width: 100%;
+    z-index: 10;
     transition: padding $long-ease ease-out,
         color $ease-time ease-out,
         clip-path $ease-time ease-out,
         transform $ease-time ease-out;
     h1 {
-        font-size: 10vw;
+        font-size: 7vw;
         line-height: 1;
         margin: 0;
         text-transform: uppercase;
@@ -56,17 +59,10 @@
     clip-path: inset(10% 10% 10% 10%);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
     position: relative;
     transform: translateZ(-.1px);
     transition: all $ease-time cubic-bezier(.38,.13,.9,.9);
-    &:active {
-        transform: translateZ(0);
-        clip-path: inset(0 0 0 0);
-        .overlay-text {
-            transform: translateZ(1px) scale(4);
-        }
-    }
     &:hover {
         .overlay-text {
             clip-path: inset(0 0 0 0);
@@ -80,17 +76,37 @@
 }
 
 .active {
-    transform: translateZ(0);
     clip-path: inset(0 0 0 0);
+    background-color: fade-out(#000000, .2);
+    transform: translateZ(0);
     .overlay-text {
         transform: translateZ(1px) scale(4);
+    }
+    .content {
+        opacity: 1;
     }
 }
 
 .zframe--frame {
-    background: url('/images/background1.png');
+    background: url('/images/background3.jpg');
     background-size: 100%;
     transform: translateZ(0);
+}
+
+.content {
+    background-color: fade-out(black, .2);
+    border-bottom-left-radius: $s-size;
+    border-bottom-right-radius: $s-size;
+    color: $off-white;
+    display: flex;
+    font-weight: 100;
+    margin-top: 0;
+    opacity: 0;
+    padding: $m-size $m-size $m-size $m-size;
+    position: relative;
+    z-index: 1;
+    transition: padding $ease-time ease-in,
+    opacity $ease-time ease-in;
 }
 
 .stop-scrolling {

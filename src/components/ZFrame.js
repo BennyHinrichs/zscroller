@@ -7,7 +7,7 @@ export default class ZFrame extends React.Component {
     }
 
     handleOnClick = () => {
-        const scrollTop = document.documentElement.scrollTop;
+        // const scrollTop = document.documentElement.scrollTop;
         const currentPage = document.getElementById(this.props.id);
         const scrollOut = (e) => {
             currentPage.parentNode.scrollTop = 0;
@@ -32,7 +32,7 @@ export default class ZFrame extends React.Component {
                     style={{'backgroundImage': `url(/images/${data[this.props.id].imgSrc}.jpg)`}}
                     onClick={this.handleOnClick}
                 >
-                    {/*<div>Content</div>*/}
+                    {data[this.props.id].content && <div className="content">{data[this.props.id].content}</div>}
                     <div className="overlay-text">
                         <h1>{data[this.props.id].overlayTitle}</h1>
                         <p>{data[this.props.id].overlaySubtitle}</p>

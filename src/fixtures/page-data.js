@@ -1,8 +1,15 @@
 export default [
     {
+        overlayTitle: 'zScroller',
+        overlaySubtitle: 'Click to zoom in. Scroll down for more.',
+        imgSrc: 'background1',
+        content: 'Scroll down to zoom out'
+    },
+    {
         overlayTitle: 'A New Plague',
         overlaySubtitle: 'A grindark novelette',
-        imgSrc: 'PinkHenrik'
+        imgSrc: 'PinkHenrik',
+        content: 'This is an idea for a portfolio-style website layout'
     },
     {
         overlayTitle: 'Oneironauts',
